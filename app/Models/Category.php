@@ -9,10 +9,9 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 
-class Category extends Model  implements HasMedia
+class Category extends Model
 {
     use HasFactory;
-    use InteractsWithMedia;
     protected $guarded=[];
 
     public function products(): HasMany

@@ -23,6 +23,33 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
     // 3) Get Products
+
+
+});
+
+// auth requests
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('all-users', [UserController::class, 'index']);//all users in DB
+
+    Route::post('/add-user', [UserController::class, 'store']); //Add new User
+
+
+//    Route::get('/products', [ProductsController::class, 'index']); //get All Products in DB
+
+    Route::post('/add-product', [ProductsController::class, 'store']);
+
+    Route::put('/edit-product/{id}', [ProductsController::class, 'update']);
+
+    Route::get('/cats', [ProductsController::class, 'GetCategories']); //Get All Cats in DB
+
+    Route::post('add-cat', [CategoryController::class, 'addCat']);
+
+
+
+
+
+
     Route::get('products', [ProductsController::class, 'GetProducts']);
 
     // 4) Get Categories
@@ -39,25 +66,6 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/info', [ProductsController::class, 'info']);
 
-
-});
-
-// auth requests
-Route::middleware('auth:sanctum')->group(function () {
-
-    Route::get('all-users', [UserController::class, 'index']);//all users in DB
-
-    Route::post('/add-user', [UserController::class, 'store']); //Add new User
-
-
-    Route::get('/products', [ProductsController::class, 'index']); //get All Products in DB
-    Route::post('/add-product', [ProductsController::class, 'store']);
-
-    Route::put('/edit-product/{id}', [ProductsController::class, 'update']);
-
-    Route::get('/cats', [ProductsController::class, 'GetCategories']); //Get All Cats in DB
-
-    Route::post('add-cat', [CategoryController::class, 'addCat']);
 
 
     //destroy cat
