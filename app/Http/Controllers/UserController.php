@@ -50,6 +50,8 @@ else {
 
     ]);
 
+    $user->addMediaFromRequest('image')->toMediaCollection('users');
+
     return response()->json([
         'message'=>'Done Correctley '],201);
 }

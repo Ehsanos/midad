@@ -28,12 +28,14 @@ class CategoryController extends Controller
 
         else
             {
-                $cat=Category::create($request->all() );
+                $cat=Category::create($request->except('image') );
                 return response()->json(
                     ['message'=>'Done',
 
                     ],201
                 );
+                $cat->addMediaFromRequest('image')->toMediaCollection('categories');
+
             }
     }
 

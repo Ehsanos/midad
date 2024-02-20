@@ -86,9 +86,6 @@ class OrdersController extends Controller
         ], 200);
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request): JsonResponse
     {
 
@@ -101,18 +98,12 @@ class OrdersController extends Controller
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Order $order)
+    public function show(Order $order):JsonResponse
     {
-        //
+
     }
 
-
-    public function all(){
-
-
+    public function all():JsonResponse{
 
         $orders=Order::all();
 
@@ -122,15 +113,13 @@ class OrdersController extends Controller
         ],201);
 
     }
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Order $order)
+
+    public function update(Request $request, $order_id):JsonResponse
     {
         // get & check order
         $order = Order::where(
             [
-                ['id', $request->order],
+                ['id', $order_id],
                 ['user_id', $request->user()->id]
             ]
         )->with('products')->first();
@@ -178,6 +167,6 @@ class OrdersController extends Controller
         return response()->json([
             'message' => 'Order has been updated successfully',
             'order' => $order,
-        ], 200);
+        ], 201);
     }
 }

@@ -16,7 +16,7 @@ class ProductsController extends Controller
 {
 
 
-    public function index(Request $request): JsonResponse
+    public function index(): JsonResponse
     {
 
         $prducts = Product::all();
@@ -61,81 +61,86 @@ class ProductsController extends Controller
         ], 200);
     }
 
-    public function store(Request $request): JsonResponse
-    {
+    public function store(Request $request):JsonResponse {
 
 
-        $img = $request->file->store('public/imgs');
 
-        if (true) {
+
+
+        if(true){
             $validator = Validator::make($request->all(), [
                 'category' => 'required',
                 'name' => 'required',
-                'price' => 'required',
-                'description' => 'required',
+                'price'=>'required',
+                'description'=>'required',
             ]);
 
-            if ($validator->fails()) {
+            if ($validator->fails()){
                 return response()->json([
                     'message' => 'Error Plase check for inputs '], 404);
-            } else {
+            }
+            else {
 
-                $product = Product::create($request->except('file'));
-                $product->addMedia($img);
+                $product=Product::create($request->except('file'));
+                $product->addMediaFromRequest('image')->toMediaCollection('products');
+
                 return response()->json([
                     'message' => 'Done '], 201);
             }
 
 
-        } else {
+        }
+
+        else{
             return response()->json([
-                'message' => true
-            ], 201);
+                'message'=>true
+            ],201);
         }
 
 
     }
 
 
-    public function update(Request $request, $id): JsonResponse
+    public function update(Request $request ,$id):JsonResponse
 
     {
         $validator = Validator::make($request->all(), [
             'category' => 'required',
             'name' => 'required',
-            'price' => 'required',
-            'description' => 'required',
+            'price'=>'required',
+            'description'=>'required',
         ]);
 
-        $poduct = Product::find($id);
+        $poduct=Product::find($id);
 
-        if (!$poduct) {
+        if (!$poduct){
             return response()->json([
                 'message' => 'Error Plase check for inputs '], 404);
-        } else {
+        }
+
+        else{
             $poduct->update($request->all());
 
             return response()->json(
-                ['message' => 'Done! '], 201);
+               ['message' => 'Done! '], 201);
         }
 
 
     }
 
 
-    public function info(): JsonResponse
-    {
+    public function info():JsonResponse {
 
-        $usersCount = User::all()->count();
-        $productCount = Product::all()->count();
-        $orderCount = Order::all()->count();
+        $usersCount=User::all()->count();
+        $productCount=Product::all()->count();
+        $orderCount=Order::all()->count();
 
         return response()->json(
             [
-                'Count Of Product' => $productCount,
-                'Count Of Users' => $usersCount,
-                'Count Of Order' => $orderCount,
-            ], 201
+                'Count Of Products'=>$productCount,
+                'Count Of Users'=>$usersCount,
+                'Count Of Orders'=>$orderCount,
+            ],201
         );
 
 

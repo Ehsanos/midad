@@ -13,20 +13,21 @@ class Product extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
-protected $guarded=[];
-    // protected $with = ['category_name'];
-    protected $appends = ['categoryname'];
-    protected $hidden = ['category_object'];
 
-    public function categoryObject(): BelongsTo
+    protected $guarded = [];
+    // protected $with = ['category_name'];
+//    protected $appends = ['categoryname'];
+//    protected $hidden = ['category_object'];
+
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category', 'id');
     }
 
-    public function getCategorynameAttribute()
-    {
-        return $this->categoryObject->name;
-    }
+//    public function getCategorynameAttribute()
+//    {
+//        return $this->categoryObject->name;
+//    }
 
 
     // admin dashboard - each product - how much order was created for
